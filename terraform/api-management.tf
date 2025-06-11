@@ -45,3 +45,21 @@ resource "azurerm_private_dns_a_record" "api-management" {
   ttl                 = 300
   records             = azurerm_api_management.api-management-hub.private_ip_addresses
 }
+
+resource "azurerm_api_management_api" "sample-api" {
+  name                  = "sample-api"
+  resource_group_name   = data.azurerm_resource_group.apim-ref-rg.name
+  api_management_name   = azurerm_api_management.api-management-hub.name
+  revision              = "1"
+  display_name          = "Sample API"
+  protocols             = ["https"]
+  subscription_required = false
+  service_url           = "https://sample-api-service.backend.contoso.com"
+  
+  import {
+    content_format = "openapi+json"
+    content_value  = file("../manifests/sample-api.json")
+  }
+
+  depends_on = [ azurerm_api_management_custom_domain.production-api,]
+}
