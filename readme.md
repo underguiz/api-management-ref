@@ -1,8 +1,8 @@
 ## About 
 
-This project implements a reference architecture for the Azure API Management with a central instance in a HUB network to publish apis deployed into spoke networks, both public and privately. 
+This project implements a reference architecture for the Azure API Management with a central instance into a hub network to publish apis deployed in spoke networks, both public and privately.
 
-It uses private link and private dns zones configuration and resource settings ready for at-scale, highly-available and secure by default scenarios.
+It uses private link, private dns zones configurations and resource settings ready for at-scale, highly-available and secure by default scenarios.
 
 ## Reference Architecture
 
