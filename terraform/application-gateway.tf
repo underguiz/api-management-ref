@@ -69,6 +69,9 @@ resource "azurerm_application_gateway" "public-apis-appgw" {
     timeout             = 120
     interval            = 10
     unhealthy_threshold = 3
+    match {
+      status_code = [ "200-399" ]
+    }
   }
 
   http_listener {
