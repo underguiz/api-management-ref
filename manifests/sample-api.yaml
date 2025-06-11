@@ -1,0 +1,77 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: sample-api-config
+data:
+  api.conf: |   
+    server {
+        listen 80;
+
+        location /hello {
+            add_header Content-Type application/json;
+
+            return 200 '{"message": "Hello World"}';
+        }
+    }
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sample-api-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sample-api
+  template:
+    metadata:
+      labels:
+        app: sample-api
+    spec:
+      containers:
+        - name: sample-api
+          image: nginx
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - name: config-volume
+              mountPath: /etc/nginx/conf.d
+      volumes:
+        - name: config-volume
+          configMap:
+            name: sample-api-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sample-api-service
+spec:
+  type: ClusterIP
+  ports:
+  - port: 80
+  selector:
+    app: sample-api
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: sample-api-ingress
+  annotations:
+    kubernetes.azure.com/tls-cert-keyvault-uri: <cert_uri>
+spec:
+  ingressClassName: nginx-internal
+  rules:
+  - host: sample-api-service.backend.contoso.com
+    http:
+      paths:
+      - backend:
+          service:
+            name: sample-api-service
+            port:
+              number: 80
+        path: /
+        pathType: Prefix
+  tls:
+    - hosts:
+      - sample-api-service.backend.contoso.com
+      secretName: keyvault-sample-api-ingress
