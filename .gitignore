@@ -36,3 +36,6 @@ terraform.rc
 # ignore certs but keep ca.cnf
 certs/*
 !certs/ca.cnf
+
+# Ignore local environment files
+.DS_Store
