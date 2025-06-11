@@ -126,7 +126,7 @@ $ az aks command invoke --resource-group apim-ref-rg --name aks-backend --comman
 Test the api
 
 ```
-$ curl --cacert ca.crt --resolve production.api.contoso.com:443:<app_gw_public_ip> https://production.api.contoso.com/hello 
+$ curl --cacert ../certs/ca.crt --resolve production.api.contoso.com:443:<app_gw_public_ip> https://production.api.contoso.com/hello 
 ```
 
 ## References
