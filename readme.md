@@ -126,7 +126,7 @@ $ az aks command invoke --resource-group apim-ref-rg --name aks-backend --comman
 
 Test the api
 
-> note: it might take a few minutes for the api to be up and running, please wait a few minutes to test it.
+> note: it might take a few minutes for the api to be up and running, please wait a few minutes before testing it.
 
 ```
 $ curl --cacert ../certs/ca.crt --resolve production.api.contoso.com:443:<app_gw_public_ip> https://production.api.contoso.com/hello 
