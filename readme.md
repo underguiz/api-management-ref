@@ -1,6 +1,6 @@
 ## About 
 
-This project implements a reference architecture for the Azure API Management service with a central instance into a hub network to publish apis deployed in spoke networks, both public and privately.
+This project implements a reference architecture for the Azure API Management service with a central instance into a hub network to publish apis deployed in spoke networks, both publicly and privately.
 
 It uses private link, private dns zones configurations and resource settings ready for at-scale, highly-available and secure by default scenarios.
 
@@ -44,11 +44,11 @@ An optional company name []:
 ```
 
 ```
-$ openssl x509 -req -in api.contoso.com.csr -CA certs/ca.crt -CAkey certs/ca.key -CAcreateserial -out certs/api.contoso.com.crt -days 365 -sha256
+$ openssl x509 -req -in certs/api.contoso.com.csr -CA certs/ca.crt -CAkey certs/ca.key -CAcreateserial -out certs/api.contoso.com.crt -days 365 -sha256
 ```
 
 ```
-$ openssl pkcs12 -export -out certs/api.contoso.com.pfx -inkey certs/api.contoso.com.key -in certs/api.contoso.com-bundle.crt -certfile ca.crt
+$ openssl pkcs12 -export -out certs/api.contoso.com.pfx -inkey certs/api.contoso.com.key -in certs/api.contoso.com.crt -certfile certs/ca.crt
 ```
 
 #### Create the backend certificate
@@ -102,10 +102,11 @@ $ terraform apply
 
 #### Deploy a sample API
 
-Create an internal ingress class and remove the public
+Create an internal ingress class and remove the public one
 
 ```
 $ cd ../manifests
+$ az aks get-credentials --resource-group apim-ref-rg --name aks-backend
 $ az aks command invoke --resource-group apim-ref-rg --name aks-backend --command "kubectl apply -f nginx-internal-controller.yaml" --file nginx-internal-controller.yaml 
 $ az aks command invoke --resource-group apim-ref-rg --name aks-backend --command "kubectl delete ingressclass webapprouting.kubernetes.azure.com"
 ```
