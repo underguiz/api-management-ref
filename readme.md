@@ -126,9 +126,16 @@ $ az aks command invoke --resource-group apim-ref-rg --name aks-backend --comman
 
 Test the api
 
+> note: it might take a few minutes for the api to be up and running, please wait a few minutes to test it.
+
 ```
 $ curl --cacert ../certs/ca.crt --resolve production.api.contoso.com:443:<app_gw_public_ip> https://production.api.contoso.com/hello 
 ```
+
+You should receive a responde from the api running in our private AKS cluster in the spoke network:
+
+```{"message": "Hello World"}```
+
 
 ## References
 
