@@ -102,13 +102,12 @@ $ terraform apply
 
 #### Deploy a sample API
 
-Create an internal ingress class and remove the public one
+Change the default ingressclass to internal
 
 ```
 $ cd ../manifests
 $ az aks get-credentials --resource-group apim-ref-rg --name aks-backend
 $ az aks command invoke --resource-group apim-ref-rg --name aks-backend --command "kubectl apply -f nginx-internal-controller.yaml" --file nginx-internal-controller.yaml 
-$ az aks command invoke --resource-group apim-ref-rg --name aks-backend --command "kubectl delete ingressclass webapprouting.kubernetes.azure.com"
 ```
 
 Create the API resources

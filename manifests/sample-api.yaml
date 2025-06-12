@@ -59,7 +59,7 @@ metadata:
   annotations:
     kubernetes.azure.com/tls-cert-keyvault-uri: <cert_uri>
 spec:
-  ingressClassName: nginx-internal
+  ingressClassName: webapprouting.kubernetes.azure.com
   rules:
   - host: sample-api-service.backend.contoso.com
     http:
