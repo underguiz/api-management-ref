@@ -2,7 +2,7 @@ resource "azurerm_network_security_group" "apim-subnet-nsg" {
   location            = data.azurerm_resource_group.apim-ref-rg.location
   name                = "apim-hub-nsg"
   resource_group_name = data.azurerm_resource_group.apim-ref-rg.name
-  
+
   security_rule = [{
     access                                     = "Allow"
     description                                = ""

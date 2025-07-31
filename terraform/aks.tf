@@ -9,7 +9,8 @@ resource "azurerm_kubernetes_cluster" "aks-backend" {
   role_based_access_control_enabled = true
 
   web_app_routing {
-    dns_zone_ids = [azurerm_private_dns_zone.backend.id]
+    dns_zone_ids             = [azurerm_private_dns_zone.backend.id]
+    default_nginx_controller = "Internal"
   }
 
   key_vault_secrets_provider {
@@ -33,8 +34,8 @@ resource "azurerm_kubernetes_cluster" "aks-backend" {
   }
 
   identity {
-    type = "UserAssigned"
-    identity_ids = [ azurerm_user_assigned_identity.aks-managed-identity.id ]
+    type         = "UserAssigned"
+    identity_ids = [azurerm_user_assigned_identity.aks-managed-identity.id]
   }
 
   lifecycle {
@@ -55,7 +56,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "app" {
   name                  = "app"
   kubernetes_cluster_id = azurerm_kubernetes_cluster.aks-backend.id
   vm_size               = "Standard_D4s_v5"
-  node_count            = 3  
+  node_count            = 3
   max_pods              = 250
   mode                  = "User"
   vnet_subnet_id        = azurerm_subnet.aks.id

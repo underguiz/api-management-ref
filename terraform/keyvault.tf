@@ -1,6 +1,6 @@
 resource "random_string" "ingress-controller-keyvault" {
-  length           = 5
-  special          = false
+  length  = 5
+  special = false
 }
 
 resource "azurerm_key_vault" "ingress-controller-keyvault" {
