@@ -3,7 +3,7 @@ resource "azurerm_public_ip" "application-gateway" {
   resource_group_name = data.azurerm_resource_group.apim-ref-rg.name
   location            = data.azurerm_resource_group.apim-ref-rg.location
   allocation_method   = "Static"
-  zones               = [ 1, 2, 3 ]
+  zones               = [1, 2, 3]
 }
 
 resource "azurerm_application_gateway" "public-apis-appgw" {
@@ -11,7 +11,7 @@ resource "azurerm_application_gateway" "public-apis-appgw" {
   resource_group_name = data.azurerm_resource_group.apim-ref-rg.name
   location            = data.azurerm_resource_group.apim-ref-rg.location
 
-  zones = [ 1, 2, 3 ]
+  zones = [1, 2, 3]
 
   sku {
     name     = "Standard_v2"
@@ -45,19 +45,19 @@ resource "azurerm_application_gateway" "public-apis-appgw" {
   }
 
   backend_address_pool {
-    name = "api-management"
+    name  = "api-management"
     fqdns = ["production.api.contoso.com"]
   }
 
   backend_http_settings {
-    host_name                     = "production.api.contoso.com"
+    host_name                      = "production.api.contoso.com"
     name                           = "api-management-http-settings"
-    cookie_based_affinity         = "Disabled"
+    cookie_based_affinity          = "Disabled"
     path                           = "/"
     port                           = 443
     protocol                       = "Https"
     request_timeout                = 60
-    trusted_root_certificate_names = [ "contoso"]
+    trusted_root_certificate_names = ["contoso"]
     probe_name                     = "api-management-probe"
   }
 
@@ -70,7 +70,7 @@ resource "azurerm_application_gateway" "public-apis-appgw" {
     interval            = 10
     unhealthy_threshold = 3
     match {
-      status_code = [ "200-399" ]
+      status_code = ["200-399"]
     }
   }
 
@@ -80,7 +80,7 @@ resource "azurerm_application_gateway" "public-apis-appgw" {
     frontend_ip_configuration_name = "application-gateway-pip"
     frontend_port_name             = "frontend-port"
     protocol                       = "Https"
-    ssl_certificate_name           = "api.contoso.com" 
+    ssl_certificate_name           = "api.contoso.com"
   }
 
   request_routing_rule {
@@ -89,6 +89,6 @@ resource "azurerm_application_gateway" "public-apis-appgw" {
     http_listener_name         = "public-apis-listener"
     backend_address_pool_name  = "api-management"
     backend_http_settings_name = "api-management-http-settings"
-    priority                   = "1" 
+    priority                   = "1"
   }
 }

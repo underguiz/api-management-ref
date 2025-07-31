@@ -23,19 +23,19 @@ resource "azurerm_role_assignment" "backend-dns-zone" {
 }
 
 resource "azurerm_role_assignment" "approuting-keyvault" {
-    scope = azurerm_key_vault.ingress-controller-keyvault.id
-    role_definition_name = "Key Vault Secrets User"
-    principal_id = azurerm_kubernetes_cluster.aks-backend.web_app_routing[0].web_app_routing_identity[0].object_id
+  scope                = azurerm_key_vault.ingress-controller-keyvault.id
+  role_definition_name = "Key Vault Secrets User"
+  principal_id         = azurerm_kubernetes_cluster.aks-backend.web_app_routing[0].web_app_routing_identity[0].object_id
 }
 
 resource "azurerm_role_assignment" "currrent-user-keyvault" {
-    scope = azurerm_key_vault.ingress-controller-keyvault.id
-    role_definition_name = "Key Vault Secrets User"
-    principal_id = data.azurerm_client_config.current.object_id
+  scope                = azurerm_key_vault.ingress-controller-keyvault.id
+  role_definition_name = "Key Vault Secrets User"
+  principal_id         = data.azurerm_client_config.current.object_id
 }
 
 resource "azurerm_role_assignment" "currrent-user-keyvault-certs" {
-    scope = azurerm_key_vault.ingress-controller-keyvault.id
-    role_definition_name = "Key Vault Certificates Officer"
-    principal_id = data.azurerm_client_config.current.object_id
+  scope                = azurerm_key_vault.ingress-controller-keyvault.id
+  role_definition_name = "Key Vault Certificates Officer"
+  principal_id         = data.azurerm_client_config.current.object_id
 }

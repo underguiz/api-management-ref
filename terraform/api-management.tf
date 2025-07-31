@@ -14,17 +14,17 @@ resource "azurerm_api_management" "api-management-hub" {
   sku_name             = "Premium_2"
   zones                = [1, 2]
   virtual_network_type = "Internal"
-  
+
   virtual_network_configuration {
     subnet_id = azurerm_subnet.apim.id
   }
 
   certificate {
     encoded_certificate = filebase64("../certs/ca.crt")
-    store_name          = "Root" 
+    store_name          = "Root"
   }
 
-  depends_on = [ azurerm_subnet_network_security_group_association.apim-subnet-nsg, ]
+  depends_on = [azurerm_subnet_network_security_group_association.apim-subnet-nsg, ]
 
 }
 
@@ -32,8 +32,8 @@ resource "azurerm_api_management_custom_domain" "production-api" {
   api_management_id = azurerm_api_management.api-management-hub.id
 
   gateway {
-    host_name                = "production.api.contoso.com"
-    certificate              = filebase64("../certs/api.contoso.com.pfx")
+    host_name   = "production.api.contoso.com"
+    certificate = filebase64("../certs/api.contoso.com.pfx")
   }
 
 }
@@ -55,11 +55,11 @@ resource "azurerm_api_management_api" "sample-api" {
   protocols             = ["https"]
   subscription_required = false
   service_url           = "https://sample-api-service.backend.contoso.com"
-  
+
   import {
     content_format = "openapi+json"
     content_value  = file("../manifests/sample-api.json")
   }
 
-  depends_on = [ azurerm_api_management_custom_domain.production-api,]
+  depends_on = [azurerm_api_management_custom_domain.production-api, ]
 }
