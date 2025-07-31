@@ -102,13 +102,7 @@ $ terraform apply
 
 #### Deploy a sample API
 
-Change the default ingressclass to internal
-
-```
-$ cd ../manifests
-$ az aks get-credentials --resource-group apim-ref-rg --name aks-backend
-$ az aks command invoke --resource-group apim-ref-rg --name aks-backend --command "kubectl apply -f nginx-internal-controller.yaml" --file nginx-internal-controller.yaml 
-```
+The Terraform configuration automatically configures the internal nginx controller as the default, so no manual configuration is needed.
 
 Create the API resources
 
